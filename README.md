@@ -24,6 +24,12 @@
 }
 </style>
 
+<style>
+mark{
+    color:red;
+}
+</style>
+
 
 <table border="0">
  <tr>
