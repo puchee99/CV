@@ -18,9 +18,11 @@
   </p>
 </div>
 
+<style>
 #col {
   column-count: 2;
 }
+</style>
 
 
 <table border="0">
