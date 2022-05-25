@@ -1,94 +1,357 @@
-## Arnau Puche
-============
+---
+graphics: yes
+name: Anthony
+surname: Schmidt
+headcolor: 01416f
+position: "Data Science & Applied Research"
+www: anthonyschmidt.co
+email: "aschmi11@utk.edu"
+twitter: anthonyteacher
+github: acircled
+date: "`r format(Sys.time(), '%B %Y')`"
+output: vitae::hyndman
+header-includes:
+  - \definecolor{linkscolor}{HTML}{026dbb}
+  - \usepackage{caption}
+  - \usepackage{colortbl}
+  - \arrayrulecolor{white}
+  - \hypersetup{colorlinks=true, linkcolor=linkscolor, filecolor=linkscolor, urlcolor=linkscolor, urlbordercolor=linkscolor}
+---
 
--------------------     ----------------------------
-1 MyAddress                        arnaupuchevila@gmail.com
-MyTown 1000                          (+34) 673821695
-MyCountry                           1800 my-phone-nr
--------------------     ----------------------------
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+library(tidyverse)
+library(gsheet)
+library(gt)
+library(flextable)
+```
 
-Education
----------
+# Education
 
-2010-2014 (expected)
-:   **PhD, Computer Science**; Awesome University (MyTown)
+```{r education}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=1760172285") %>%
+  tidyr::fill(-why) %>%
+  vitae::detailed_entries(what = Degree,
+                          when = Year,
+                          where = Institution, 
+                          with = Location, 
+                          why)
+```
 
-    *Thesis title: Deep Learning Approaches to the Self-Awesomeness
-     Estimation Problem*
 
-2007-2010
-:   **BSc, Computer Science and Electrical Engineering**; University of
-    HomeTown (HomeTown)
+# Professional Appointments
 
-    *Minor: Awesomeology*
 
-Experience
-----------
+```{r working-experience}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=1554751840") %>%
+  vitae::detailed_entries(what = title, 
+                          when = date, 
+                          where = institution, 
+                          with = location)
+```
 
-**Your Most Recent Work Experience:**
+# Software
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
 
-Short text containing the type of work done, results obtained,
-lessons learned and other remarks. Can also include lists and
-links:
+```{r software, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=1692561333") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> software
+  cat(paste(software), sep = '\n\n')
+```
 
-* First item
 
-* Item with [link](http://www.example.com). Links will work both in
-  the html and pdf versions.
+\endgroup
+\leavevmode\newline
 
-**That Other Job You Had**
+# Publications
 
-Also with a short description.
+## Peer Reviewed Journal Articles
 
-Technical Experience
---------------------
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
 
-My Cool Side Project
-:   For items which don't have a clear time ordering, a definition
-    list can be used to have named items.
+```{r peerreviewed, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=0") %>%
+  filter(category == "peer-reviewed") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> peer
+  cat(paste(peer), sep = '\n\n')
+```
 
-    * These items can also contain lists, but you need to mind the
-      indentation levels in the markdown source.
-    * Second item.
+\endgroup
+\leavevmode\newline
 
-Open Source
-:   List open source contributions here, perhaps placing emphasis on
-    the project names, for example the **Linux Kernel**, where you
-    implemented multithreading over a long weekend, or **node.js**
-    (with [link](http://nodejs.org)) which was actually totally
-    your idea...
+## Pre-Prints and Unpublished Manuscripts
 
-Programming Languages
-:   **first-lang:** Here, we have an itemization, where we only want
-    to add descriptions to the first few items, but still want to
-    mention some others together at the end. A format that works well
-    here is a description list where the first few items have their
-    first word emphasized, and the last item contains the final few
-    emphasized terms. Notice the reasonably nice page break in the pdf
-    version, which wouldn't happen if we generated the pdf via html.
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
 
-:   **second-lang:** Description of your experience with second-lang,
-    perhaps again including a [link] [ref], this time placing the url
-    reference elsewhere in the document to reduce clutter (see source
-    file). 
+```{r preprint, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=1558956454") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> preprints
+  cat(paste(preprints), sep = '\n\n')
+```
 
-:   **obscure-but-impressive-lang:** We both know this one's pushing
-    it.
 
-:   Basic knowledge of **C**, **x86 assembly**, **forth**, **Common Lisp**
+\endgroup
+\leavevmode\newline
 
-[ref]: https://github.com/githubuser/superlongprojectname
+## Book Reviews
 
-Extra Section, Call it Whatever You Want
-----------------------------------------
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
 
-* Human Languages:
+```{r bookreviews, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=0") %>%
+  filter(category == "book review") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> bookreviews
+  cat(paste(bookreviews), sep = '\n\n')
+```
 
-     * English (native speaker)
-     * ???
-     * This is what a nested list looks like.
+\endgroup
+\leavevmode\newline
 
-* Random tidbit
+## Technical Reports
 
-* Other sort of impressive-sounding thing you did
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
 
+```{r techreports, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=1473597883") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> tr
+  cat(paste(tr), sep = '\n\n')
+```
+
+\endgroup
+\leavevmode\newline
+
+# Conference Papers and Presentations
+
+## International/National Conferences
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+
+```{r intlconf, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=318960497") %>%
+  filter(category == "intl") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> intl
+  cat(paste(intl), sep = '\n\n')
+```
+
+\endgroup
+\leavevmode\newline
+
+## Regional Conferences
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+```{r regional, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=318960497") %>%
+  filter(category == "regional") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> regional
+  cat(paste(regional), sep = '\n\n')
+```
+
+\endgroup
+\leavevmode\newline
+
+## Poster Presentations
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+
+```{r poster, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=318960497") %>%
+  filter(category == "poster") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> poster
+  cat(paste(poster), sep = '\n\n')
+```
+
+
+\endgroup
+\leavevmode\newline
+
+## Campus & Department Talks
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+```{r dept, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=318960497") %>%
+  filter(category == "campus talk") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> campus
+  cat(paste(campus), sep = '\n\n')
+```
+
+
+\endgroup
+\leavevmode\newline
+
+## Invited Talks
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+```{r invited, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=318960497") %>%
+  filter(category == "invited") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> invited
+  cat(paste(invited), sep = '\n\n')
+```
+
+
+\endgroup
+\leavevmode\newline
+
+## Professional Workshops, Webinars, and Trainings
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+```{r workshops, results='asis'}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=318960497") %>%
+  filter(category == "workshops") %>%
+  select(markdown) %>%
+  mutate(markdown = str_replace_all(markdown, "\\{|\\}", ""),
+         markdown = str_replace_all(markdown, "Schmidt, A.", "**Schmidt, A.**")) %>%
+  pull(markdown) -> workshops
+  cat(paste(workshops), sep = '\n\n')
+```
+
+
+\endgroup
+\leavevmode\newline
+
+
+# Research and Evaluation Experience
+
+```{r research-experience}
+library(tidyverse)
+library(gsheet)
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=144487203") %>%
+  tidyr::fill(-details) %>%
+  vitae::detailed_entries(what = project,
+                          when = date,
+                          where = institution,
+                          why = details)
+```
+
+
+# Teaching Experience
+
+## Full-Time Experience
+
+```{r teaching-experience}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=802976282") %>%
+  filter(category=="teaching") %>%
+  select(-category) %>%
+  tidyr::fill(-details) %>%
+  vitae::detailed_entries(where = title, when = dates, what = school, with = location, details)
+```
+
+
+## Other Teaching Experience
+
+```{r other-teaching-experience}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=802976282") %>%
+  filter(category=="other teaching") %>%
+  select(-category) %>%
+  tidyr::fill(-details) %>%
+  vitae::detailed_entries(where = title, when = dates, what = school, with = location, details)
+```
+
+## Teacher Training Experience
+
+```{r teacher-training-experience}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=802976282") %>%
+  filter(category=="teacher training") %>%
+  select(-category) %>%
+  tidyr::fill(-details) %>%
+  vitae::detailed_entries(where = title, when = dates, what = school, with = location, details)
+```
+
+# Awards and Honors
+
+```{r award}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=1320047315") %>%
+  tidyr::fill(-details) %>%
+  vitae::detailed_entries(where = organization,
+                          when = date,
+                          what = award_name,
+                          with = details)
+```
+
+# Skills
+
+\vspace*{-\baselineskip}
+
+```{r skills, message=FALSE, warning=FALSE}
+gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=885656894") %>%
+  mutate(category = ifelse(is.na(category), " ", category),
+         details = ifelse(is.na(details), " ", details
+         )) %>%
+  knitr::kable(col.names = NULL, align=c("l","l"), escape = F) %>%
+  kableExtra::row_spec(row=2, extra_latex_after = "\\arrayrulecolor{white}") %>%
+  kableExtra::column_spec(column = 1, bold = T)
+```
+
+
+\leavevmode\newline
+
+# Current Memberships
+
+```{r results='asis'}
+membership <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1qbMpXHXm41q69prUVjpQFfP_mMXjORNxFP_IbAoCuKo/edit#gid=1398743395") %>%
+    pull(organization)
+  cat(paste('-', membership), sep = '\n')
+```
+
+# Notes
+
+This CV is reproducible. All the source code behind this CV is available on \href{https://github.com/acircleda/CV}{my Github repo}.
