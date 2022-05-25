@@ -16,13 +16,14 @@
     Excepteur sint occaecat cupidatat non proident, sunt in
     culpa qui officia deserunt mollit anim id est laborum.
   </p>
-</div>
-
-<style>
+  <style>
 #col {
   column-count: 2;
 }
 </style>
+</div>
+
+
 
 <style>
 mark{
